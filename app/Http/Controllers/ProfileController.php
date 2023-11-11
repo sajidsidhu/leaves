@@ -21,6 +21,12 @@ class ProfileController extends Controller
             'user' => $request->user(),
         ]);
     }
+    public function editUser($id): View
+    {
+        return view('profile.update', [
+            'user' => User::find($id),
+        ]);
+    }
 
     /**
      * Update the user's profile information.
@@ -67,5 +73,6 @@ class ProfileController extends Controller
     public function updateStatus($id,$status){
         User::where('id',$id)->update(['active'=>$status]);
         return redirect()->back()->with("success","User has been ".( $status ? "Activate" : "Deactivate" ));
+        
     }
 }
