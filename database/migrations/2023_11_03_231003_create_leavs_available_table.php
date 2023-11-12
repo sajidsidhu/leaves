@@ -11,8 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('leavs_available', function (Blueprint $table) {
+        Schema::create('leavs_availed', function (Blueprint $table) {
             $table->id();
+            $table->string('emp_id');
+            $table->string('name');
+            $table->string('type');
+            $table->string('action');
+            $table->date('leave_date');
+            $table->float('debit');
+            $table->integer('count');
             $table->timestamps();
         });
     }
@@ -22,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('leavs_available');
+        Schema::dropIfExists('leavs_availed');
     }
 };

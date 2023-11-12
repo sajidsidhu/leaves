@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('leaves_balance', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('month');
-            $table->integer('year');
-            $table->integer('coff')->default(0);
-            $table->integer('el')->default(0);
-            $table->integer('lwp')->default(0);
-            $table->integer('rh')->default(0);
-            $table->integer('sl')->default(0);
-            $table->integer('wfh')->default(0);
+            $table->string('emp_id');
+            $table->string('name')->nullable();
+            $table->string('region')->nullable();
+            $table->integer('year')->default(now()->year);
+            $table->integer('coff')->nullable()->default(0);
+            $table->integer('el')->nullable()->default(0);
+            $table->integer('lwp')->nullable()->default(0);
+            $table->integer('rh')->nullable()->default(0);
+            $table->integer('sl')->nullable()->default(0);
+            $table->integer('wfh')->nullable()->default(0);
             $table->timestamps();
         });
     }

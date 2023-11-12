@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
@@ -34,6 +35,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/users', [ProfileController::class, 'users'])->name('users.list');
     Route::get('/user-edit/{id}', [ProfileController::class, 'editUser'])->name('user.edit');
     Route::post('/user-update', [ProfileController::class, 'UpdateUser'])->name('user.update');
+    Route::post('/import-balance', [ImportController::class, 'importBalanceSheet'])->name('import.balance');
+    Route::get('/import-balance-sheet', [ImportController::class, 'importBalanceSheetForm'])->name('import.balance.sheet');
+    Route::post('/import-availed', [ImportController::class, 'importAvailedeSheet'])->name('import.availed');
+    Route::get('/import-availed-sheet', [ImportController::class, 'importBalanceSheetForm'])->name('import.availed.sheet');
 });
 
 require __DIR__.'/auth.php';
