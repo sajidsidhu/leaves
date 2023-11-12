@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
@@ -42,6 +43,20 @@ class ProfileController extends Controller
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+   
+    /**
+     * Update the user's profile information.
+     */
+    public function UpdateUser(ProfileUpdateRequest $request): RedirectResponse
+    {
+        $user = User::find($request->id);
+        $user->fill($request->only(['name', 'type', 'active', 'phone', 'email']));
+        if($request->password){
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
+        return Redirect::back()->with('success', "User has been updated");
     }
 
     /**

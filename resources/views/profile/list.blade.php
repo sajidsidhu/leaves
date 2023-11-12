@@ -35,9 +35,8 @@
                                 <td>{{$user->type}}</td>
                                 <td>{{$user->active ? "Active":"Deactive"}}</td>
                                 <td>
-                                    <a href="{{route('user.status.update',['id'=>$user->id,'status'=>($user->active ? 0:1)])}}" class="btn btn-md">Edit</a> 
-                                    <a href="#" class="btn btn-md">Active</a> 
-                                    <a href="#" class="btn btn-md">Deactive</a> 
+                                    <a href="{{route('user.status.update',['id'=>$user->id,'status'=>($user->active ? 0:1)])}}" class="btn btn-md">{{$user->active ? "Deactive":"Active"}}</a> 
+                                    <a href="{{route('user.edit',['id'=>$user->id])}}" class="btn btn-md">Edit</a> 
                                 </td>
                             </tr>
                         @endforeach
