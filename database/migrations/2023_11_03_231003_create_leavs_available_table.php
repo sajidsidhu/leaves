@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('leavs_availed', function (Blueprint $table) {
             $table->id();
-            $table->string('emp_id');
-            $table->string('name');
-            $table->string('type');
-            $table->string('action');
-            $table->date('leave_date');
-            $table->float('debit');
-            $table->integer('count');
+            $table->string('emp_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('type')->nullable();
+            $table->string('action')->nullable();
+            $table->date('leave_date')->nullable();
+            $table->float('debit')->nullable();
+            $table->integer('count')->nullable();
             $table->timestamps();
+            $table->index(['emp_id', 'leave_date']);
         });
     }
 

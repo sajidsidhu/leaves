@@ -24,6 +24,9 @@ return new class extends Migration
             $table->integer('sl')->nullable()->default(0);
             $table->integer('wfh')->nullable()->default(0);
             $table->timestamps();
+            $table->index(['emp_id', 'year']);
+
+
         });
     }
 

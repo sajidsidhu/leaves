@@ -3,15 +3,17 @@
 namespace App\Imports;
 
 use App\Models\LeavesBalance;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
-use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
+// ,WithValidation
 class EmpLeaveBalance implements ToModel, SkipsOnError, SkipsEmptyRows
 {
 
@@ -59,5 +61,17 @@ class EmpLeaveBalance implements ToModel, SkipsOnError, SkipsEmptyRows
     public function onError(\Throwable $e)
     {
         // Handle the exception how you'd like.
+    }
+
+
+    public function rules(): array
+    {
+        // '0' => 'required|unique:leaves_balance,emp_id,`year`,'.$this->year,
+        // return [
+        //     '0' => ['required',Rule::unique('leaves_balance','emp_id')->where('year',$this->year)],
+        //     '1' => 'required',
+        //     '2' => 'required',
+
+        // ];
     }
 }
