@@ -157,7 +157,7 @@
                         <td>15</td>
                     </tr>
                     <tr>
-                        <td colspan="8" class="text-align-left">Carry Forwarded From 2022</td>
+                        <td colspan="8" class="text-align-left">Carry Forwarded From {{($balance->year-1)}}</td>
                         <?php
                             $el_b = $balance->el??0;
                             $sl_b = $balance->sl??0;
@@ -166,7 +166,7 @@
                         <td>{{$el_b}}</td>
                         <td></td>
                         <td></td>
-                        <td></td>
+                        <td rowspan="13">{{$balance->year}}</td>
                         <td></td>
                         <td></td>
                         <td>{{$sl_b}}</td>
@@ -202,7 +202,6 @@
                         <td>{{$el_b}}</td>
                         <td></td>
                         <td></td>
-                        <td>{{$balance->year}}</td>
                         <td>1</td>
                         <td>
                             <?php 

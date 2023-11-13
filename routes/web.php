@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user-edit/{id}', [ProfileController::class, 'editUser'])->name('user.edit');
     Route::post('/user-update', [ProfileController::class, 'UpdateUser'])->name('user.update');
     Route::post('/import-balance', [ImportController::class, 'importBalanceSheet'])->name('import.balance');
-    Route::get('/import-balance-sheet', [ImportController::class, 'importBalanceSheetForm'])->name('import.balance.sheet');
+    Route::get('/import', [ImportController::class, 'importBalanceSheetForm'])->name('import.balance.sheet');
     Route::post('/import-availed', [ImportController::class, 'importAvailedeSheet'])->name('import.availed');
     Route::get('/import-availed-sheet', [ImportController::class, 'importBalanceSheetForm'])->name('import.availed.sheet');
     Route::get('/export', [PdfExportController::class, 'monthList'])->name('export.form');
