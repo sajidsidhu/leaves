@@ -41,6 +41,12 @@ class PdfExportController extends Controller
 
 
 
+    public function downloadList()
+    {
+        $files = ZipFile::orderBy('id','desc')->paginate(10);
+        return view('admin.download_list', compact('files'));
+    }
+
     public function zipDownload($path)
     {
         $file = storage_path('zipped/' . $path); // Replace with the path to your directory
@@ -48,7 +54,7 @@ class PdfExportController extends Controller
         if (File::exists($file)) {
             return response()->download($file);
         } else {
-            return 'File not found.';
+            return redirect()->back()->with('error',"No File Exist");
         }
     }
 }

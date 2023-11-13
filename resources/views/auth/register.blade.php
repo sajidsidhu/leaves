@@ -1,5 +1,20 @@
 <x-app-layout>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+<x-slot name="header">
+        <div class=" flex justify-between">
+
+            <div class="flex">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Add User') }}
+                </h2>
+            </div>
+            <div class="flex">
+                <a href="{{route('users.list')}}" >
+                    <i class="fa-plus"></i>    Users List
+                </a>    
+            </div>
+        </div>
+    </x-slot>
+    <div class="min-h-screen flex flex-col items-center mt-6 sm:pt-0 bg-gray-100">
         <div class="w-full sm:max-w-md py-4 px-6 bg-white shadow-md overflow-hidden sm:rounded-lg">
             <form method="POST" action="{{ route('register') }}">
                 @csrf

@@ -1,5 +1,10 @@
 <x-app-layout>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+<x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Generate PDF') }}
+        </h2>
+    </x-slot>
+    <div class="min-h-screen flex flex-col items-center mt-6 sm:pt-0 bg-gray-100">
         <div class="w-full sm:max-w-md py-4 px-6 bg-white shadow-md overflow-hidden sm:rounded-lg">
             <form method="POST" action="{{ route('export.pdf') }}" enctype="multipart/form-data">
                 @csrf
@@ -27,27 +32,6 @@
             </x-primary-button>
         </div>
     </form>
-    <?php
-        $page = request()->page??0;
-        $sr = 1 + (($page > 0?$page-1:0) * 10);
-    ?>
-    <table class="table w-full border">
-                        <tr>
-                            <th>Sr</th>
-                            <th>Name</th>
-                            <th>Action</th>
-                        </tr>
-                        @foreach($files as $f)
-                            <tr>
-                                <td>{{$sr++}}</td>
-                                <td>{{$f->path}}</td>
-                                <td>
-                                    <a href="{{route('zip.download',['path'=>$f->path])}}" class="btn btn-md">Download</a> 
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
-                {{$files->links()}}
             </div>
         </div>
 </x-guest-layout>

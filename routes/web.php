@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');//, 'verified'
     
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    Route::post('register', [RegisteredUserController::class, 'store'])->name('user.add');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/import-availed', [ImportController::class, 'importAvailedeSheet'])->name('import.availed');
     Route::get('/import-availed-sheet', [ImportController::class, 'importBalanceSheetForm'])->name('import.availed.sheet');
     Route::get('/export', [PdfExportController::class, 'monthList'])->name('export.form');
+    Route::get('/download-list', [PdfExportController::class, 'downloadList'])->name('download.zip');
     Route::post('/export-pdf', [PdfExportController::class, 'generatePDF'])->name('export.pdf');
     Route::get('/zip-download/{path}', [PdfExportController::class, 'zipDownload'])->name('zip.download');
     // Route::get('/zip-delete/', [PdfExportController::class, 'zipDelete'])->name('zip.delete');

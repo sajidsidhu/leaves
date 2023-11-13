@@ -13,7 +13,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('POC APP') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -36,6 +36,20 @@
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
+                        </x-dropdown-link>
+                        @if(auth()->user()->type == "Super Admin")
+                        <x-dropdown-link :href="route('users.list')">
+                            {{ __('Users List') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('import.balance.sheet')">
+                            {{ __('Uploads Excels') }}
+                        </x-dropdown-link>
+                        @endif
+                        <x-dropdown-link :href="route('export.form')">
+                            {{ __('Generate PDF') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('download.zip')">
+                            {{ __('Download Zip') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
