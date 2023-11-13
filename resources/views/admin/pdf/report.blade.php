@@ -111,7 +111,7 @@
                                 </tr>
                             </tbody></table>
                         </td>
-                        <td>Leave at credit (including balance, if any on return from leave on last occasion)
+                        <td style="width:50px;">Leave at credit (including balance, if any on return from leave on last occasion)
                             <table>
                                 <tbody><tr>
                                     <td>5</td>
@@ -135,14 +135,14 @@
                                 </tbody>
                             </table>
                         </td>
-                        <td>Balance n return from leave
+                        <td style="width:50px;">Balance n return from leave
                             <table>
                                 <tbody><tr>
                                     <td>9</td>
                                 </tr>
                             </tbody></table>
                         </td>
-                        <td>Date which wages for leave paid and amount paid
+                        <td style="width:50px;">Date which wages for leave paid and amount paid
                             <table>
                                 <tbody><tr>
                                     <td>10</td>
@@ -179,7 +179,7 @@
                             </table>
                         </td>
 
-                        <td>Balance at the end of he year
+                        <td style="width:50px;">Balance at the end of he year
                             <table>
                                 <tbody>
                                     <tr>
@@ -190,6 +190,23 @@
                         </td>
                     </tr>
 
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>6</td>
+                        <td>7</td>
+                        <td>8</td>
+                        <td>9</td>
+                        <td>10</td>
+                        <td>11</td>
+                        <td>12</td>
+                        <td>13</td>
+                        <td>14</td>
+                        <td>15</td>
+                    </tr>
                     <tr>
                         <td colspan="8" class="text-align-left">Carry Forwarded From 2022</td>
                         <?php
@@ -217,29 +234,39 @@
                         <td>{{date('t', strtotime("{$balance->year}-{$month}-01"))}}</td>
                         <td>1.25</td>
                         <td>{{($el_b = $el_b+1.25)}}</td>
-                        <td colspan="2">
-                            <table>
-                                <?php 
-                                    $leaves = collect($availed)->whereBetween('leave_date',[date('Y-m-d',strtotime($start_date)),date('Y-m-d',strtotime($end_date))])->all();
-                                    // dd($leaves);
+                         <?php 
+                                    $leaves = $availed->where('type','EL')->whereBetween('leave_date',[date('Y-m-d',strtotime($start_date)),date('Y-m-d',strtotime($end_date))])->all();
+                                    $t_availed = collect($leaves)->sum('debit')??0;
+                                    $el_b -= $t_availed;
                                 ?>
-                                @foreach($leaves as $leave)
-                                <tr>
-                                    <td>{{date('d-m-Y',strtotime($leave->leave_date))}}</td>
-                                    <td>{{date('d-m-Y',strtotime($leave->leave_date))}}</td>
-                                </tr>
-                                @endforeach
-                            </table>    
-
+                        <td>
+                            @foreach($leaves as $leave)
+                            {{date('d-m-Y',strtotime($leave->leave_date))}}<br/>
+                            @endforeach
                         </td>
-                        <td>2</td>
-                        <td>44.25</td>
+                        <td>
+                            @foreach($leaves as $leave)
+                            {{date('d-m-Y',strtotime($leave->leave_date))}}<br/>
+                            @endforeach
+                        </td>
+                        <td>{{$t_availed}}</td>
+                        <td>{{$el_b}}</td>
                         <td></td>
                         <td></td>
-                        <td>2023</td>
+                        <td>{{$balance->year}}</td>
                         <td>1</td>
-                        <td>28.01.2023</td>
-                        <td>0</td>
+                        <td>
+                            <?php 
+                                $leaves = $availed->where('type','SL')->whereBetween('leave_date',[date('Y-m-d',strtotime($start_date)),date('Y-m-d',strtotime($end_date))])->all();
+                                $t_availed = collect($leaves)->sum('debit')??0;
+                                $sl_b += 1;
+                                $sl_b -= $t_availed;
+                            ?>
+                            @foreach($leaves as $leave)
+                                {{date('d-m-Y',strtotime($leave->leave_date))}}
+                            @endforeach 
+                        </td>
+                        <td>{{$sl_b}}</td>
                     </tr>
                     <?php } ?>
                 </tbody>
