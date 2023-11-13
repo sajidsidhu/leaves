@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\PdfExportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/import-balance-sheet', [ImportController::class, 'importBalanceSheetForm'])->name('import.balance.sheet');
     Route::post('/import-availed', [ImportController::class, 'importAvailedeSheet'])->name('import.availed');
     Route::get('/import-availed-sheet', [ImportController::class, 'importBalanceSheetForm'])->name('import.availed.sheet');
+    Route::get('/export', [PdfExportController::class, 'monthList'])->name('export.form');
+    Route::post('/export-pdf', [PdfExportController::class, 'generatePDF'])->name('export.pdf');
 });
 
 require __DIR__.'/auth.php';
