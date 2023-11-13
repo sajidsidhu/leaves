@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 // use Barryvdh\DomPDF\PDF;
+
+use App\Jobs\GeneratePDFJob;
 use PDF;
 use Illuminate\Http\Request;
 use App\Models\LeavesAvailed;
@@ -23,16 +25,16 @@ class PdfExportController extends Controller
 
     public function generatePDF(Request $request)
     {
-         $data['availed'] = LeavesAvailed::where('emp_id',"GB125840")->where(DB::raw("date_format(leave_date,'%Y-%c')"),$request->year."-".$request->month)->groupByRaw("emp_id,date_format(leave_date,'%Y-%c-%d')")->get();
-        $data['balance'] = $balance = LeavesBalance::where(["year"=>$request->year,["name","<>",null],["region","<>",null]])->first();
-        $pdf = PDF::loadView('admin.pdf.report', $data)->setPaper('a4', 'landscape');
+        //  $data['availed'] = LeavesAvailed::where('emp_id',"GB125840")->where(DB::raw("date_format(leave_date,'%Y-%c')"),$request->year."-".$request->month)->groupByRaw("emp_id,date_format(leave_date,'%Y-%c-%d')")->get();
+        // $data['balance'] = $balance = LeavesBalance::where(["year"=>$request->year,["name","<>",null],["region","<>",null]])->first();
+        // $pdf = PDF::loadView('admin.pdf.report', $data)->setPaper('a4', 'landscape');
         
-        $userFolder = storage_path("export/" . now()->format('Y-m-d'));
-        File::makeDirectory($userFolder, 0755, true, true);
-        $pdf->save($userFolder .'/'. trim($balance->emp_id).'-report.pdf');
-        return "ok";
-        return view('admin.pdf.report',$data);
-        return $data['b'] = LeavesBalance::where(['emp_id'=>"GA080222","year"=>"2023"])->last();
+        // $userFolder = storage_path("export/" . now()->format('Y-m-d'));
+        // File::makeDirectory($userFolder, 0755, true, true);
+        // $pdf->save($userFolder .'/'. trim($balance->emp_id).'-report.pdf');
+        // return "ok";
+        // return view('admin.pdf.report',$data);
+        // return $data['b'] = LeavesBalance::where(['emp_id'=>"GA080222","year"=>"2023"])->last();
     
     
         
@@ -45,13 +47,9 @@ class PdfExportController extends Controller
         if(!$availed){
             return redirect()->back()->with('error',"Leave availed Sheet is not uploaded for ({$request->month}) month");
         }
-        $pdf = PDF::loadView('pdf.view', $data);
+        dispatch(new GeneratePDFJob($request->year,$request->month));
         
-        $userFolder = "storage/app/public/users/{$user->name}/" . now()->format('Y-m-d');
-        File::makeDirectory($userFolder, 0755, true, true);
-        $pdf->save($userFolder . '/report.pdf');
-        
-        return redirect()->back()->with('message', 'PDF generated successfully for ' . $user->name);
+        return redirect()->back()->with('success', 'PDFs are generating');
     }
 
 
