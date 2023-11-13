@@ -27,6 +27,27 @@
             </x-primary-button>
         </div>
     </form>
+    <?php
+        $page = request()->page??0;
+        $sr = 1 + (($page > 0?$page-1:0) * 10);
+    ?>
+    <table class="table w-full border">
+                        <tr>
+                            <th>Sr</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                        @foreach($files as $f)
+                            <tr>
+                                <td>{{$sr++}}</td>
+                                <td>{{$f->path}}</td>
+                                <td>
+                                    <a href="{{route('zip.download',['path'=>$f->path])}}" class="btn btn-md">Download</a> 
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                {{$files->links()}}
             </div>
         </div>
 </x-guest-layout>

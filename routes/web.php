@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/import-availed-sheet', [ImportController::class, 'importBalanceSheetForm'])->name('import.availed.sheet');
     Route::get('/export', [PdfExportController::class, 'monthList'])->name('export.form');
     Route::post('/export-pdf', [PdfExportController::class, 'generatePDF'])->name('export.pdf');
+    Route::get('/zip-download/{path}', [PdfExportController::class, 'zipDownload'])->name('zip.download');
+    // Route::get('/zip-delete/', [PdfExportController::class, 'zipDelete'])->name('zip.delete');
 });
 
 require __DIR__.'/auth.php';

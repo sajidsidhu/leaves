@@ -34,14 +34,16 @@ class GeneratePDFJob implements ShouldQueue
      */
     public function handle(): void
     {
+        $userFolder = storage_path("export/" . now()->format('Y-m-d'));
+        File::makeDirectory($userFolder, 0755, true, true);
         $employees = LeavesAvailed::where(DB::raw("date_format(leave_date,'%Y-%c')"),$this->year."-".$this->month)->groupByRaw("emp_id,date_format(leave_date,'%Y')")->get();
         foreach($employees as $emp){
             $data['availed'] = LeavesAvailed::where('emp_id',$emp->emp_id)->where(DB::raw("date_format(leave_date,'%Y-%c')"),$this->year."-".$this->month)->groupByRaw("date_format(leave_date,'%Y-%c-%d')")->get();
             $data['balance'] = LeavesBalance::where(["year"=>$this->year,"emp_id"=>$emp->emp_id])->first();
             $pdf = PDF::loadView('admin.pdf.report', $data)->setPaper('a4', 'landscape');
-            $userFolder = storage_path("export/" . now()->format('Y-m-d'));
-            File::makeDirectory($userFolder, 0755, true, true);
             $pdf->save($userFolder .'/'. trim($emp->emp_id).'-report.pdf');
         }
+        
+        dispatch(new GenerateZipAndDownload($userFolder));
     }
 }
