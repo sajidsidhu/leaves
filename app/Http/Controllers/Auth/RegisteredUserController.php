@@ -58,9 +58,7 @@ class RegisteredUserController extends Controller
             'password'=>$request->password
         ];
         $user->notify(new WellcomeEmail($data));
-        event(new Registered($user));
-
-        Auth::login($user);
+        // event(new Registered($user));
 
         return redirect(RouteServiceProvider::HOME);
     }
