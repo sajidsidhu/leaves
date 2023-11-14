@@ -1,4 +1,9 @@
 <x-app-layout>
+    <style>
+        td{
+            text-align: center;
+        }
+        </style>
     <x-slot name="header">
         <div class=" flex justify-between">
 
@@ -36,7 +41,7 @@
                             <th>Phone</th>
                             <th>Type</th>
                             <th>Status</th>
-                            <th colspan="2">Action</th>
+                            <th>Action</th>
                         </tr>
                         <?php
         $page = request()->page??0;
@@ -52,8 +57,6 @@
                                 <td>{{$user->active ? "Active":"Deactive"}}</td>
                                 <td>
                                     <a href="{{route('user.status.update',['id'=>$user->id,'status'=>($user->active ? 0:1)])}}" class="btn btn-md">{{$user->active ? "Deactive":"Active"}}</a> 
-                                </td>
-                                <td>
                                     <a href="{{route('user.edit',['id'=>$user->id])}}" class="btn btn-md">Edit</a> 
                                 </td>
                             </tr>

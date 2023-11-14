@@ -40,6 +40,8 @@ class GeneratePDFJob implements ShouldQueue
         foreach($employees as $emp){
             $data['availed'] = LeavesAvailed::where('emp_id',$emp->emp_id)->where(DB::raw("date_format(leave_date,'%Y-%c')"),$this->year."-".$this->month)->groupByRaw("date_format(leave_date,'%Y-%c-%d')")->get();
             $data['balance'] = LeavesBalance::where(["year"=>$this->year,"emp_id"=>$emp->emp_id])->first();
+            $data['year'] = $this->year;
+            $data['month'] = $this->month;
             $pdf = PDF::loadView('admin.pdf.report', $data)->setPaper('a4', 'landscape');
             $pdf->save($userFolder .'/'. trim($emp->emp_id).'-report.pdf');
         }

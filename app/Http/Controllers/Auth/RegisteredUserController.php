@@ -18,7 +18,7 @@ class RegisteredUserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth'], ['only' => [
+        $this->middleware(['auth','spAdmin'], ['only' => [
             'create',
             'store',
         ]]);
@@ -38,6 +38,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'in:Super Admin,Admin'],
@@ -60,6 +61,6 @@ class RegisteredUserController extends Controller
         $user->notify(new WellcomeEmail($data));
         // event(new Registered($user));
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(route('users.list'))->with('success','User Added Successfully');
     }
 }

@@ -1,4 +1,9 @@
 <x-app-layout>
+<style>
+        td{
+            text-align: center;
+        }
+</style>
 <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Download List Zip\'s') }}
@@ -28,7 +33,6 @@
                         @endforeach
                     </table>
                 {{$files->links()}}
-    
             </div>
             </div>
         </div>

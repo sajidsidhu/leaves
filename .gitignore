@@ -19,3 +19,4 @@ yarn-error.log
 storage/export/
 storage/zipped/
 storage/export/2023-11-13/GA080222-report.pdf
+.env

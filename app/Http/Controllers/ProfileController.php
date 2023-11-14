@@ -13,6 +13,16 @@ use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth','spAdmin'], ['only' => [
+            'editUser',
+            'UpdateUser',
+            'users',
+            'updateStatus',
+        ]]);
+    }
     /**
      * Display the user's profile form.
      */
@@ -64,18 +74,18 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+        // $request->validateWithBag('userDeletion', [
+        //     'password' => ['required', 'current_password'],
+        // ]);
 
-        $user = $request->user();
+        // $user = $request->user();
 
-        Auth::logout();
+        // Auth::logout();
 
-        $user->delete();
+        // $user->delete();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        // $request->session()->invalidate();
+        // $request->session()->regenerateToken();
 
         return Redirect::to('/');
     }

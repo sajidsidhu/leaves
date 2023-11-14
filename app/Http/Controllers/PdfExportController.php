@@ -31,7 +31,7 @@ class PdfExportController extends Controller
         }
         $availed = LeavesAvailed::select(DB::raw("date_format(leave_date,'%Y-%c')"))->where(DB::raw("date_format(leave_date,'%Y-%c')"), $request->year . "-" . $request->month)->count();
         if (!$availed) {
-            return redirect()->back()->with('error', "Leave availed Sheet is not uploaded for ({$request->month}) month");
+            return redirect()->back()->with('error', "Leave availed Sheet is not uploaded for \"".date('F',strtotime("2023-".$request->month."-1"))."\"");
         }
         dispatch(new GeneratePDFJob($request->year, $request->month));
 

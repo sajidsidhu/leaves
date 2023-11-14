@@ -160,7 +160,7 @@
                         <td colspan="8" class="text-align-left">Carry Forwarded From {{($balance->year-1)}}</td>
                         <?php
                             $el_b = $balance->el??0;
-                            $sl_b = $balance->sl??0;
+                            $sl_b = 0;
                         ?>
 
                         <td>{{$el_b}}</td>
@@ -173,14 +173,14 @@
                     </tr>
                     <?php 
                     
-                    for($month = 1; $month <= 12; $month++){
-                        $start_date = '01-'.$month.'-'.$balance->year;
-                        $end_date = date('t-m-Y', strtotime("{$balance->year}-{$month}-01"));
+                    for($m = 1; $m <= $month; $m++){
+                        $start_date = '01-'.$m.'-'.$balance->year;
+                        $end_date = date('t-m-Y', strtotime("{$balance->year}-{$m}-01"));
                     ?>
                     <tr>
                         <td>{{$start_date}}</td>
                         <td>{{$end_date}}</td>
-                        <td>{{date('t', strtotime("{$balance->year}-{$month}-01"))}}</td>
+                        <td>{{date('t', strtotime("{$balance->year}-{$m}-01"))}}</td>
                         <td>1.25</td>
                         <td>{{($el_b = $el_b+1.25)}}</td>
                          <?php 

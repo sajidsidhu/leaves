@@ -38,13 +38,14 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
                         @if(auth()->user()->type == "Super Admin")
-                        <x-dropdown-link :href="route('users.list')">
-                            {{ __('Users List') }}
-                        </x-dropdown-link>
+                            <x-dropdown-link :href="route('users.list')">
+                                {{ __('Users List') }}
+                            </x-dropdown-link>
+                        @endif
                         <x-dropdown-link :href="route('import.balance.sheet')">
                             {{ __('Uploads Excels') }}
                         </x-dropdown-link>
-                        @endif
+                        
                         <x-dropdown-link :href="route('export.form')">
                             {{ __('Generate PDF') }}
                         </x-dropdown-link>
